@@ -1,0 +1,96 @@
+services:
+  app:
+    #image: python:3.9.18  # 直接使用官方Python镜像
+    build: 
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./logs:/app/logs
+    working_dir: /app  # 设置工作目录
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - TZ=Asia/Shanghai
+      - IS_RUNNING_IN_DOCKER=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://app:3000/api/health"]
+    networks:
+      - breatic_network
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres        # 数据库用户名
+      POSTGRES_PASSWORD: 12345678 # 数据库密码
+      POSTGRES_DB: postgres           # 初始数据库名
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./app/initdb:/docker-entrypoint-initdb.d
+    networks:
+      - breatic_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: breatic_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data/redis
+    command: redis-server --appendonly yes
+    networks:
+      - breatic_network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/html:/usr/share/nginx/html  # 挂载 web 的构建产物
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/cert:/etc/nginx/cert:ro  # 挂载证书目录
+      - ./logs/nginx:/var/log/nginx  # ← 添加日志目录挂载
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always  # 关键配置：容器停止时自动重启
+    networks:
+      - breatic_network
+
+  logrotate:
+    image: blacklabelops/logrotate
+    volumes:
+      - ./logs/nginx:/var/log/nginx
+    environment:
+      - CRON_SCHEDULE=0 0 * * *
+      - LOGROTATE_LOGFILES=/var/log/nginx/*.log
+      - LOGROTATE_FILEOWNER=root
+      - LOGROTATE_FILEGROUP=root
+      - LOGROTATE_OLDDIR=/var/log/nginx/old
+      - LOGROTATE_INTERVAL=daily
+      - LOGROTATE_COPIES=30
+      - LOGROTATE_SIZE=100M
+      - LOGROTATE_COMPRESSION=true
+      - LOGROTATE_DELAYCOMPRESSION=true
+    depends_on:
+      - nginx
+    restart: always
+    networks:
+      - breatic_network
+
+volumes:
+  redis_data:
+  postgres_data:
+
+networks:
+  breatic_network:
+    driver: bridge

@@ -1,0 +1,144 @@
+/* 选项卡容器 */
+.userCenter :global .accountManagementModal-tabs .ant-tabs-nav {
+  margin: 0 !important;
+  height: 60px !important;
+  line-height: 24px !important;
+}
+.userCenter :global .accountManagementModal-tabs .ant-tabs-nav::before {
+  border-bottom: none !important;
+}
+
+/* 选项卡间距 */
+.userCenter :global .accountManagementModal-tabs .ant-tabs-tab {
+  justify-content: center;
+  margin-left: 0 !important;
+  margin-right: 40px !important;
+}
+.userCenter :global .accountManagementModal-tabs .ant-tabs-tab:last-child {
+  justify-content: center;
+  margin-right: 40px !important;
+}
+
+/* 逐项设置宽度，简单粗暴 */
+.userCenter :global .accountManagementModal-tabs .ant-tabs-tab:first-child {
+  width: 82px;
+}
+.userCenter :global .accountManagementModal-tabs .ant-tabs-tab:nth-child(2) {
+  width: 160px;
+}
+.userCenter :global .accountManagementModal-tabs .ant-tabs-tab:nth-child(3) {
+  width: 120px;
+}
+.userCenter :global .accountManagementModal-tabs .ant-tabs-tab:nth-child(4) {
+  width: 62px;
+}
+
+.userCenter :global(.accountManagementModal-tabs .ant-tabs-tab-btn) {
+  display: inline-flex;
+  font-weight: 400;
+  font-size: 20px;
+  transition: transform 0.2s ease, font-weight 0.2s ease;
+  transform-origin: bottom;
+}
+
+/* 选项卡激活时的字体样式 */
+.userCenter :global(.accountManagementModal-tabs) {
+  /* 默认字体 */
+  :global(.ant-tabs-tab-btn) {
+    color: #0d0d0d !important;
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  /* 激活字体 */
+  :global(.ant-tabs-tab-active .ant-tabs-tab-btn) {
+    font-weight: 700 !important;
+  }
+}
+
+/* 去掉 AntD 默认的激活横线（ink-bar） */
+.userCenter :global .accountManagementModal-tabs .ant-tabs-ink-bar {
+  display: none !important;
+}
+
+.userCenter :global .upgrade-relationship-modal {
+  border-radius: 8px !important;
+}
+
+.userCenter :global .account-management-modal .ant-modal-container {
+  padding: 16px !important;
+}
+
+/* 内容区域 padding 0 */
+.userCenter :global .account-management-modal-content,
+.userCenter :global .upgrade-relationship-modal-content,
+.userCenter :global .upgrade-relationship-modal-content {
+  padding: 0 !important;
+}
+
+/* 关闭按钮悬停样式 */
+.userCenter :global .account-management-modal .ant-modal-close:hover,
+.userCenter :global .upgrade-relationship-modal .ant-modal-close:hover,
+.userCenter :global .purchase-credits-modal .ant-modal-close:hover {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Ensure Tabs content fills height */
+.userCenter :global .accountManagementModal-tabs {
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+}
+
+.userCenter :global .accountManagementModal-tabs .ant-tabs-content-holder {
+  flex: 1;
+  overflow: hidden; /* Or auto if scrolling is handled inside */
+}
+
+.userCenter :global .accountManagementModal-tabs .ant-tabs-content {
+  height: 100%;
+}
+
+.userCenter :global .accountManagementModal-tabs .ant-tabs-tabpane {
+  height: 100%;
+}
+
+/* 表格头部固定 */
+.userCenter :global .ant-table-thead > tr > th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+}
+
+
+/* Dropdown 菜单项悬停高亮 */
+:global .project-logo-dropdown .ant-dropdown-menu {
+  padding: 16px !important; /* 自定义内边距 */
+  border-radius: 8px !important;
+  border: 1px solid #e9e9e9 !important;
+}
+:global .project-logo-dropdown .ant-dropdown-menu-item {
+  padding: 0px !important; /* 自定义内边距 */
+}
+
+:global .ant-popover-container {
+  border-radius: 8px !important;
+  padding: 0 !important;
+  margin-top: 10px !important;
+}
+
+:global(.logout-project-modal .ant-modal-container) {
+  padding: 16px!important;
+  border-radius: 8px !important;
+}
+
+/* 关闭按钮悬停样式 */
+:global(.logout-project-modal .ant-modal-close:hover) {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  background: transparent !important;
+}

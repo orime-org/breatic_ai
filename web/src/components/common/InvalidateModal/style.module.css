@@ -1,0 +1,4 @@
+/* style.module.css */
+:global(.invalidate-modal .ant-modal-container) {
+  padding: 16px!important;
+}

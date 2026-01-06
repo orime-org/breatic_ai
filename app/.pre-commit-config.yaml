@@ -1,0 +1,12 @@
+repos:
+  - repo: local
+    hooks:
+      - id: python-secret-guard
+        name: python secret guard
+        language: python
+        additional_dependencies: []
+        entry: python -X utf8 app/utils/github_check.py
+        pass_filenames: true
+        stages: [commit, push]
+        env:
+          PYTHONIOENCODING: utf-8

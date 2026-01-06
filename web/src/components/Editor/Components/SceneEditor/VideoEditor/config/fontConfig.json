@@ -1,0 +1,31 @@
+{
+  "fonts": [
+    {
+      "family": "KaiTi",
+      "displayName": "KaiTi",
+      "url": "https://breatic.visiony.cc/fonts/KaiTi/SIMKAI.TTF",
+      "children": []
+    },
+    {
+      "family": "Microsoft YaHei",
+      "displayName": "Microsoft YaHei",
+      "children": [
+        {
+          "family": "Microsoft YaHei Light",
+          "displayName": "Light",
+          "url": "https://breatic.visiony.cc/fonts/MicrosoftYahei/MSYHL.TTC"
+        },
+        {
+          "family": "Microsoft YaHei Regular",
+          "displayName": "Regular",
+          "url": "https://breatic.visiony.cc/fonts/MicrosoftYahei/MSYH.TTC"
+        },
+        {
+          "family": "Microsoft YaHei Bold",
+          "displayName": "Bold",
+          "url": "https://breatic.visiony.cc/fonts/MicrosoftYahei/MSYHBD.TTC"
+        }
+      ]
+    }
+  ]
+}

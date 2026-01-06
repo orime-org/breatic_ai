@@ -1,0 +1,1535 @@
+/**
+ * 全局覆盖和主题： 基础样式、主题变量、第三方库通用覆盖与交互动画
+ * @file editor.css
+ * @description 调整优先级与融合第三方库覆盖，作用范围全局，且需要在页面较早位置加载以确保优先级
+*/
+/* 调整优先级与融合第三方库覆盖 */
+/* 确保 Tailwind 样式优先级高于 Ant Design */
+@layer tailwind-base, antd;
+@layer tailwind-base {
+  @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;
+
+/* 确保 Tailwind 样式优先级高于 Ant Design */
+@layer utilities {
+  /* 重置 Ant Design 可能影响的样式 */
+  .ant-btn {
+    @apply !border-0;
+  }
+
+  /* 确保 Tailwind 的 margin/padding 类优先级更高 */
+  .m-0 {
+    margin: 0 !important;
+  }
+  .p-0 {
+    padding: 0 !important;
+  }
+  .mt-4 {
+    margin-top: 1rem !important;
+  }
+  .mb-4 {
+    margin-bottom: 1rem !important;
+  }
+  .ml-4 {
+    margin-left: 1rem !important;
+  }
+  .mr-4 {
+    margin-right: 1rem !important;
+  }
+  .pt-4 {
+    padding-top: 1rem !important;
+  }
+  .pb-4 {
+    padding-bottom: 1rem !important;
+  }
+  .pl-4 {
+    padding-left: 1rem !important;
+  }
+  .pr-4 {
+    padding-right: 1rem !important;
+  }
+
+  /* 确保 Tailwind 的 flex 类优先级更高 */
+  .flex {
+    display: flex !important;
+  }
+  .flex-col {
+    flex-direction: column !important;
+  }
+  .flex-row {
+    flex-direction: row !important;
+  }
+  .items-center {
+    align-items: center !important;
+  }
+  .justify-center {
+    justify-content: center !important;
+  }
+  .justify-between {
+    justify-content: space-between !important;
+  }
+
+  /* 确保 Tailwind 的 width/height 类优先级更高 */
+  .w-full {
+    width: 100% !important;
+  }
+  .h-full {
+    height: 100% !important;
+  }
+  .w-screen {
+    width: 100vw !important;
+  }
+  .h-screen {
+    height: 100vh !important;
+  }
+
+  /* 确保 Tailwind 的 background 类优先级更高 */
+  .bg-white {
+    background-color: #ffffff !important;
+  }
+  .bg-gray-100 {
+    background-color: #f3f4f6 !important;
+  }
+  .bg-gray-200 {
+    background-color: #e5e7eb !important;
+  }
+
+  /* 确保 Tailwind 的 text 类优先级更高 */
+  .text-black {
+    color: #000000 !important;
+  }
+  .text-white {
+    color: #ffffff !important;
+  }
+  .text-gray-500 {
+    color: #6b7280 !important;
+  }
+  .text-sm {
+    font-size: 0.875rem !important;
+  }
+  .text-base {
+    font-size: 1rem !important;
+  }
+  .text-lg {
+    font-size: 1.125rem !important;
+  }
+
+  /* 确保 Tailwind 的 border 类优先级更高 */
+  /* .border {
+    border-width: 1px !important;
+  } */
+  .border-0 {
+    border-width: 0 !important;
+  }
+  .border-gray-300 {
+    border-color: #d1d5db !important;
+  }
+  .rounded {
+    border-radius: 0.25rem !important;
+  }
+  .rounded-lg {
+    border-radius: 0.5rem !important;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  overscroll-behavior-x: none; /* 禁止左右方向的浏览器历史导航，Chrome / Edge / Electron 有效 */
+  background-color: #ffffff;
+  font-family: var(--font-primary);
+  margin: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+:root {
+  --background: #f3f5f9;
+  --foreground: #171717;
+  --border: #e9e9e9;
+  --font-primary: "Roboto", "Roboto Fallback";
+  --font-display: "Poller One", "Poller One Fallback";
+  --font-body: "Roboto", "Roboto Fallback";
+
+  /* 节点执行边框动画先关变量 */
+  --size: 180px; /* 光束长度 */
+  --duration: 3s; /* 光束动画周期 */
+  --anchor: 90; /* 光束起点百分比 */
+  --colors: #f671ff, #ba76ff, #88cbff, #bbdd6c, #f8e382, #fdc668; /* 彩虹颜色 */
+  --delay: 0s; /* 动画延迟 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #f3f5f9;
+    --foreground: #ededed;
+    --border: 217.2 32.6% 17.5%;
+    --font-primary: "Roboto", "Roboto Fallback";
+    --font-display: "Poller One", "Poller One Fallback";
+    --font-body: "Roboto", "Roboto Fallback";
+  }
+}
+
+.__className_5d4a9e {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-style: normal;
+}
+
+.react-flow {
+  --xy-theme-hover: #c5c5c5;
+  --xy-theme-edge-hover: black;
+  --xy-theme-color-focus: #e8e8e8;
+  --xy-node-border-default: 1px solid #ededed;
+  --xy-node-boxshadow-default: 0px 3.54px 4.55px 0px #00000005, 0px 3.54px 4.55px 0px #0000000d, 0px 0.51px 1.01px 0px #0000001a;
+  --xy-node-border-radius-default: 8px;
+  --xy-handle-background-color-default: #ffffff;
+  --xy-handle-border-color-default: #aaaaaa;
+  --xy-edge-label-color-default: #505050;
+  --border-bg-color: "#fff";
+}
+
+.react-flow.dark {
+  --xy-node-boxshadow-default: 0px 3.54px 4.55px 0px rgba(255, 255, 255, 0.05), 0px 3.54px 4.55px 0px rgba(255, 255, 255, 0.13), 0px 0.51px 1.01px 0px rgba(255, 255, 255, 0.2);
+  --xy-theme-color-focus: #535353;
+}
+
+.react-flow__node-group {
+  background-color: rgba(207, 182, 255, 0.4);
+  border-color: #9e86ed;
+}
+
+/* .react-flow__edge-path {
+  stroke-dasharray: 6,6!important;
+    stroke-width: 3px!important
+} */
+
+.react-flow__node .base-node-border-error:before {
+  background-color: #f7bcc3;
+}
+
+.react-flow__node .base-node-border-error:before,
+.react-flow__node.selected .base-node-border:before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  border-radius: 18px;
+  opacity: 0.3;
+  transition: all 0.3s;
+  z-index: -1;
+}
+
+.react-flow__node.selected .base-node-border:before {
+  background-color: var(--border-bg-color);
+}
+
+.react-flow__edge.selectable.selected .react-flow__edge-path,
+.react-flow__edge.selectable:hover .react-flow__edge-path {
+  stroke: var(--xy-theme-edge-hover);
+}
+
+.react-flow__handle.connectingfrom,
+.react-flow__handle.connectingto,
+.react-flow__handle.connectionindicator:focus {
+  border-color: var(--xy-theme-edge-hover);
+}
+
+.react-flow__resize-control.handle {
+  background-color: #ffffff;
+  border-color: #9e86ed;
+  border-radius: 0;
+  width: 5px;
+  height: 5px;
+}
+
+/*    !*border: var(--xy-node-border-default);*!*/
+/*    !*color: var(--xy-node-color, var(--xy-node-color-default));*!*/
+/*    !*outline: 2px solid var(--xy-theme-selected);*!*/
+/*    !*border-color: var(--xy-theme-selected);*!*/
+.xy-edge-lines-1 {
+  stroke-width: 2 !important;
+  stroke-dasharray: 0 0 !important;
+}
+
+.xy-edge-lines-xu {
+  stroke-width: 3 !important;
+  stroke-dasharray: 8 8 !important;
+}
+
+.DropdownMenuContent,
+.DropdownMenuSubContent {
+  min-width: 100px;
+  background-color: var(--op-background-card);
+  border-radius: 6px;
+  padding: 12px;
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  border: 1.5px solid var(--op-dropdown-border);
+}
+
+.DropdownMenuContent[data-side="top"],
+.DropdownMenuSubContent[data-side="top"] {
+  animation-name: slideDownAndFade;
+}
+
+.DropdownMenuContent[data-side="right"],
+.DropdownMenuSubContent[data-side="right"] {
+  animation-name: slideLeftAndFade;
+}
+
+.DropdownMenuContent[data-side="bottom"],
+.DropdownMenuSubContent[data-side="bottom"] {
+  animation-name: slideUpAndFade;
+}
+
+.DropdownMenuContent[data-side="left"],
+.DropdownMenuSubContent[data-side="left"] {
+  animation-name: slideRightAndFade;
+}
+
+.DropdownMenuCheckboxItem,
+.DropdownMenuItem,
+.DropdownMenuRadioItem,
+.DropdownMenuSubTrigger {
+  font-size: 13px;
+  line-height: 1;
+  color: var(--op-text-1);
+  font-weight: 500;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+  height: 30px;
+}
+
+.DropdownMenuCheckboxItem[data-disabled],
+.DropdownMenuItem[data-disabled],
+.DropdownMenuRadioItem[data-disabled],
+.DropdownMenuSubTrigger[data-disabled] {
+  color: var(--op-text-2);
+}
+
+.DropdownMenuCheckboxItem[data-highlighted],
+.DropdownMenuItem[data-highlighted],
+.DropdownMenuRadioItem[data-highlighted],
+.DropdownMenuSubTrigger[data-highlighted] {
+  background-color: var(--op-dropdown-hover);
+  color: var(--op-text-1);
+}
+
+.DropdownMenuSeparator {
+  height: 1px;
+  background-color: var(--op-dropdown-border);
+  margin: 4px auto;
+  width: 100%;
+}
+
+.DropdownMenuItemIndicator {
+  position: absolute;
+  left: 0;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.DropdownMenuArrow {
+  fill: white;
+}
+
+.RightSlot {
+  margin-left: auto;
+  padding-left: 20px;
+  color: var(--op-dropdown-color-2);
+}
+
+[data-highlighted] > .RightSlot {
+  color: var(--op-text-1);
+}
+
+[data-disabled] .RightSlot {
+  color: var(--op-text-2);
+}
+
+/**
+ * 二级菜单样式
+ */
+/* 让一级菜单标题和箭头垂直居中（可选） */
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-title {
+  display: flex;
+  align-items: center;
+  line-height: initial;
+  transition: background-color 0.2s ease;
+}
+.ntts-dropdown-menu .ant-dropdown-menu-title-content {
+  flex: 1;
+}
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-expand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+/* 一级菜单 hover 背景（增加 !important 以压过 Tailwind） */
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-title:hover {
+  background-color: #f3f3f3 !important;
+}
+
+/* 子菜单打开/激活/选中时，一级菜单保持与 hover 相同的背景（增加 !important） */
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-open > .ant-dropdown-menu-submenu-title,
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-active > .ant-dropdown-menu-submenu-title,
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-selected > .ant-dropdown-menu-submenu-title,
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-title[aria-expanded="true"] {
+  background-color: #f3f3f3 !important;
+}
+
+/* 子菜单打开期间，让一级菜单的描述保持展开（增加 !important，兼容 aria-expanded） */
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-open > .ant-dropdown-menu-submenu-title .ntts-item-des,
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-active > .ant-dropdown-menu-submenu-title .ntts-item-des,
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-selected > .ant-dropdown-menu-submenu-title .ntts-item-des,
+.ntts-dropdown-menu .ant-dropdown-menu-submenu-title[aria-expanded="true"] .ntts-item-des {
+  opacity: 1 !important;
+  max-height: 2.5rem !important; /* 等价于 Tailwind 的 max-h-10 */
+  transition: opacity 0.2s ease, max-height 0.2s ease;
+}
+
+.ant-dropdown-menu-item {
+  background-color: #ffffff !important;
+}
+
+@keyframes slideUpAndFade {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRightAndFade {
+  0% {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDownAndFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeftAndFade {
+  0% {
+    opacity: 0;
+    transform: translateX(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+:root {
+  --track-color: white;
+  --op-color-error: #ff3c52;
+  --op-color-warn: #d88c11;
+  --op-background-page: #fff;
+  --op-background-card: #fff;
+  --op-background-card-2: #fff;
+  --op-border-card: #cccccc;
+  --op-border-card-2: #e5e5e5;
+  --op-text-1: #0d0d0d;
+  --op-text-2: #656565;
+  --op-text-48: #484848;
+  --op-text-primary: #04fe06;
+  --op-line-1: rgba(0, 0, 0, 0.06);
+  --op-loading-1: #f2f2f2;
+  --op-loading-2: #e9e9e9;
+  --op-table-bg: rgb(245 245 245);
+  --op-table-border: rgb(229 229 229);
+  --op-acity-bg-1: rgba(255, 255, 255, 0.8);
+  --op-acity-border-1: rgba(0, 0, 0, 0.2);
+  --op-acity-text-1: rgba(0, 0, 0, 0.3);
+  --op-acity-line-1: rgba(0, 0, 0, 0.05);
+  --op-slider-range: rgba(0, 0, 0, 0.1);
+  --op-slider-thumb: #161616;
+  --op-progress-range: #efefef;
+  --op-progress-thumb: linear-gradient(116deg, rgba(246, 98, 204, 0.7) 6.49%, rgba(222, 101, 210, 0.7) 26.59%, rgba(33, 126, 255, 0.7) 64.08%, rgba(13, 216, 80, 0.7) 91.24%, rgba(4, 254, 6, 0.7) 115.14%);
+  --op-result-border: #000;
+  --op-scroll-bar: rgba(0, 0, 0, 0.01);
+  --op-lip-sync-bg: #fff0fa;
+  --op-dropdown-border: #e5e5e5;
+  --op-dropdown-hover: #f4f5f7;
+  --op-dropdown-color-2: rgba(0, 0, 0, 0.3);
+  --op-nodebar-bg: #ffffff;
+  --op-nodebar-hover: #f1f1f0;
+  --op-nodebar-border: #e5e5e5;
+  --op-nodebar-page: #f9f9f9;
+  --op-model-mode-bg: #f6f6f6;
+  --op-model-mode-active: #fff;
+  --op-model-mode-border: #b2b2b2;
+  --op-switch-bg: #e4e4e7;
+  --op-switch-active: #fff;
+  --op-switch-active-bg: #494949;
+  --op-music-gen-bg: #fdf4cf;
+  --op-brage-bg: #f6f6f6;
+  --op-brage-text: #949494;
+  --op-brage-border: #f1f1f0;
+  --op-checkbox-border: #000;
+  --op-checkbox-bg: #f1f1f1;
+  --op-checkbox-active-border: #000;
+  --op-checkbox-active-bg: #000;
+  --op-checkbox-active-text: #ffffff;
+  --op-compare-bg: #f6f6f6;
+  --op-compare-card-bg: #f1f1f0;
+  --op-compare-border: #000;
+  --op-assets-bg: #f6f6f6;
+  --op-assets-border: #9d9d9d;
+  --op-assets-active-bg: #fff;
+  --op-assets-active-border: #dbdcdb;
+  --op-node-tool-bar-bg: #ffffff;
+  --op-node-tool-bar-item-hover: #ececec;
+  --op-node-tool-bar-border: #e5e5e5;
+  --op-blocks-border: #e5e5e5;
+  --op-blocks-bg: #fff;
+  --op-blocks-hover: #e9e9e9;
+  --op-blocks-boxshadow: 0px 0px 4px rgba(0, 0, 0, 0.05) inset;
+  --op-blocks-active-boxshadow: 0px 0px 1px 0.5px rgba(144, 148, 143, 0.3);
+  --op-timeline-border: rgba(0, 0, 0, 0.1);
+  --op-timeline-bg: rgba(255, 255, 255, 0.5);
+  --op-track-bg: #fff;
+  --op-track-border: #e5e5e5;
+}
+
+.dark {
+  --op-background-page: #161616;
+  --op-background-card: #242424;
+  --op-background-card-2: #313131;
+  --op-border-card: rgba(255, 255, 255, 0.2);
+  --op-border-card-2: #2e2e2f;
+  --op-text-1: #fff;
+  --op-text-2: #a7a7a7;
+  --op-text-48: #fff;
+  --op-text-primary: #000;
+  --op-line-1: rgba(255, 255, 255, 0.2);
+  --op-loading-1: #242424;
+  --op-loading-2: rgba(255, 255, 255, 0.1);
+  --op-table-bg: rgba(255, 255, 255, 0.1);
+  --op-table-border: rgba(46, 46, 47, 0.5);
+  --op-acity-bg-1: rgba(0, 0, 0, 0.8);
+  --op-acity-border-1: rgba(255, 255, 255, 0.2);
+  --op-acity-line-1: rgba(255, 255, 255, 0.2);
+  --op-acity-text-1: rgba(255, 255, 255, 0.3);
+  --op-slider-range: rgba(255, 255, 255, 0.2);
+  --op-slider-thumb: #f1f1f0;
+  --op-progress-range: #191919;
+  --op-progress-thumb: linear-gradient(116deg, #ff8df4 6.4%, #7fb3fb 43.47%, #acffc8 64.48%, #fcf991 94.58%);
+  --op-result-border: #454545;
+  --op-dropdown-border: rgba(255, 255, 255, 0.1);
+  --op-dropdown-hover: rgba(255, 255, 255, 0.1);
+  --op-dropdown-color-2: rgba(255, 255, 255, 0.3);
+  --op-nodebar-bg: #313131;
+  --op-nodebar-hover: #ffffff;
+  --op-nodebar-border: #5a5a5a;
+  --op-nodebar-page: #242424;
+  --op-model-mode-bg: rgba(255, 255, 255, 0.1);
+  --op-model-mode-active: #242424;
+  --op-model-mode-border: rgba(255, 255, 255, 0.5);
+  --op-scroll-bar: rgba(255, 255, 255, 0.1);
+  --op-lip-sync-bg: #f662cc4c;
+  --op-switch-bg: #323232;
+  --op-switch-active: #0a0a0b;
+  --op-switch-active-bg: #fafafa;
+  --op-brage-bg: #202020;
+  --op-brage-text: #4d4d4d;
+  --op-brage-border: #1d1d1d;
+  --op-music-gen-bg: rgba(253, 244, 207, 0.5);
+  --op-checkbox-border: #fff;
+  --op-checkbox-bg: #6d6d6d;
+  --op-checkbox-active-border: #fff;
+  --op-checkbox-active-bg: #fff;
+  --op-checkbox-active-text: #000;
+  --op-compare-bg: #242424;
+  --op-compare-card-bg: #303030;
+  --op-compare-border: rgb(50, 50, 50);
+  --op-assets-bg: #0e0e0e;
+  --op-assets-border: #666666;
+  --op-assets-active-bg: #242424;
+  --op-assets-active-border: #505050;
+  --op-node-tool-bar-bg: #242424;
+  --op-node-tool-bar-item-hover: rgba(255, 255, 255, 0.1);
+  --op-node-tool-bar-border: #505050;
+  --op-blocks-border: #3a3a3a;
+  --op-blocks-bg: #313131;
+  --op-blocks-hover: rgba(255, 255, 255, 0.1);
+  --op-blocks-boxshadow: 0px 0px 4px rgba(255, 255, 255, 0.2) inset;
+  --op-blocks-active-boxshadow: 0px 0px 1px 0.5px rgba(144, 148, 143, 0.3);
+  --op-timeline-border: #dadada;
+  --op-timeline-bg: rgba(255, 255, 255, 0.5);
+}
+
+/* ========== 图像渲染优化 - 消除旋转锯齿 ========== */
+img,
+video,
+canvas {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: high-quality;
+}
+
+/* 优化旋转和缩放的元素 */
+.absolute {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Moveable 控制点样式 */
+/* 图片和视频的所有控制点都是圆形 */
+.moveable-control-media .moveable-control {
+  border-radius: 50% !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* 文字的控制点默认样式（正方形） */
+.moveable-control-text .moveable-control {
+  border-radius: 50% !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* 文字的右中控制点 (e) 是长方形 */
+/* .moveable-control-text .moveable-e {
+  width: 6px !important;
+  height: 20px !important;
+  border-radius: 2px !important;
+  margin-left: -2px !important;
+} */
+
+/* ========== 语言切换器样式 ========== */
+/* 选择器本身显示的文字 */
+.language-switcher-select .ant-select-selection-item {
+  font-size: 12px !important;
+  line-height: 24px !important;
+}
+
+/* 下拉菜单项 */
+.language-switcher-dropdown .ant-select-item {
+  font-size: 12px !important;
+}
+
+.language-switcher-dropdown .ant-select-item-option-content {
+  font-size: 12px !important;
+}
+
+/* ========== 右侧面板 Select 下拉框样式 ========== */
+/* 统一右侧面板所有 Select 下拉框的字体大小为 12px */
+.ant-select-dropdown .ant-select-item {
+  font-size: 12px !important;
+}
+
+.ant-select-dropdown .ant-select-item-option-content {
+  font-size: 12px !important;
+}
+
+/* Select 选中项显示的文字 */
+.ant-select-selection-item {
+  font-size: 12px !important;
+}
+
+/* ========== 统一输入框和下拉框圆角 ========== */
+/* 统一所有 Input 和 Select 的圆角为 4px */
+.ant-input,
+.ant-select-selector {
+  border-radius: 4px !important;
+}
+
+.ant-select-dropdown {
+  border-radius: 4px !important;
+}
+
+/* ========== Tooltip 提示文字样式 ========== */
+/* 统一所有 Tooltip 的字体大小为 12px */
+.ant-tooltip-container {
+  font-size: 12px !important;
+}
+
+/* ========== 媒体上传组件样式 ========== */
+/* 修复 Dragger 默认高度 100% 的问题 */
+.ant-upload-wrapper .ant-upload-drag {
+  height: auto !important;
+  min-height: 100px !important;
+}
+
+/* 让遮罩只覆盖容器区域（而非全屏） */
+.video-editor-modal .ant-modal-mask {
+  position: absolute !important; /* 覆盖 antd 默认 fixed */
+  inset: 0; /* 覆盖整个容器 */
+  width: 100%;
+  height: 100%;
+}
+
+/* 让包裹层也定位在容器内 */
+.video-editor-modal .ant-modal-wrap {
+  position: absolute !important;
+  inset: 0;
+}
+
+/* 覆盖Antd默认Modal样式 */
+
+.node-textsplit-modal-container .ant-modal-container {
+  padding: 0 !important;
+}
+/* 标题栏行高 */
+.video-editor-modal .ant-modal-title,
+.node-textsplit-modal .ant-modal-title {
+  line-height: 24px;
+}
+
+/* 边距 */
+.node-textsplit-modal-content {
+  padding: 0 !important;
+  height: 100% !important;
+}
+/* header 间距 */
+.node-textsplit-modal .ant-modal-header {
+  margin-bottom: 0px !important;
+}
+/* footer 间距 */
+.node-textsplit-modal .ant-modal-footer {
+  margin-top: 0 !important;
+}
+/* 关闭按钮悬停样式 */
+.node-textsplit-modal .ant-modal-close:hover {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Dropdown 菜单项悬停高亮 */
+.project-logo-dropdown .ant-dropdown-menu {
+  padding: 12px !important; /* 自定义内边距 */
+  border-radius: 5px !important;
+  border: 1px solid #e9e9e9 !important;
+}
+.project-logo-dropdown .ant-dropdown-menu-item {
+  padding: 0px !important; /* 自定义内边距 */
+}
+
+/* 仅针对标题输入，移除焦点/悬停边框与蓝色阴影 */
+.panel-title-input,
+.panel-title-input:hover,
+.panel-title-input:focus {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 适配 antd v5 的 outlined 变体/状态类 */
+.panel-title-input.ant-input,
+.panel-title-input.ant-input-outlined,
+.panel-title-input.ant-input-status-success,
+.panel-title-input.ant-input-status-error {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 若未来该 Input 使用了 affix wrapper（prefix/suffix），也去掉边框 */
+.panel-title-edit .ant-input-affix-wrapper,
+.panel-title-edit .ant-input-affix-wrapper:hover,
+.panel-title-edit .ant-input-affix-wrapper-focused {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.node-workflow .ant-upload,
+.node-workflow .ant-upload-btn {
+  padding: 0 !important;
+}
+
+/**
+ * 覆盖所有类node-workflow下按钮的图标垂直居中
+ */
+.node-workflow .ant-btn .ant-btn-icon {
+  line-height: normal !important;
+}
+.node-workflow .ant-btn .ant-btn-icon > svg {
+  vertical-align: -0.25rem !important;
+}
+
+/**
+ * 覆盖所有类node-workflow下按钮的图标垂直居中
+ */
+.node-workflow-exec-btn .ant-btn.ant-btn-icon-only {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+}
+.node-workflow-exec-btn .ant-btn .ant-btn-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+.node-workflow-exec-btn .ant-btn .ant-btn-icon > svg {
+  display: block !important;
+  width: 25px !important;
+  height: 25px !important;
+}
+
+/**
+ * 覆盖所有 Tooltip 的 padding 内边距 0px
+ */
+.react-flow__node .ant-tooltip,
+.react-flow__node .ant-tooltip .ant-tooltip-container,
+.ant-tooltip .node-workflow-tooltip-container {
+  padding: 0rem !important; /* 10px */
+  color: #fff;
+  font-size: 0.625rem !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  max-width: 300px;
+  border-radius: 5px !important;
+}
+
+/* 解除 对应类下的 tooltip 宽度限制 */
+.node-addsoundtovideo-tooltip,
+.node-texttoimage-tooltip,
+.node-imagetoimage-tooltip,
+.node-texttovideo-tooltip,
+.node-imagetovideo-tooltip {
+  max-width: none !important;
+}
+.node-addsoundtovideo-tooltip .ant-tooltip-container,
+.node-texttoimage-tooltip .ant-tooltip-container,
+.node-imagetoimage-tooltip .ant-tooltip-container,
+.node-texttovideo-tooltip .ant-tooltip-container,
+.node-imagetovideo-tooltip .ant-tooltip-container {
+  max-width: none !important;
+  width: auto !important;
+  white-space: nowrap;
+}
+
+/**
+ * 覆盖所有类node-workflow下Select 选择器的内边距 0, 10px
+*/
+.node-workflow .ant-select-selector {
+  padding: 0 10px !important;
+}
+
+/* ------------------------------- 
+.node-imagetoimage-modals-select, 
+.node-texttoimage-modals-select, 
+.node-texttovideo-modals-select, 
+.node-imagetovideo-modals-select 
+.node-addsoundtovideo-modals-select
+.node-videolipsync-modals-select
+.node-texttospeech-modals-select
+.node-texttospeech-voices-select
+.node-generatemelody-modals-select
+.node-generatemusics-modals-select
+.node-texttosplit-modals-select
+-------------------------------*/
+/* 勾选样式 */
+.node-imagetoimage-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttoimage-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttovideo-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-imagetovideo-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-addsoundtovideo-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-videolipsync-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttospeech-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttospeech-voices-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-generatemelody-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-generatemusics-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttosplit-modals-select .ant-select-item-option-selected .ant-select-item-option-state .anticon {
+  display: none;
+}
+.node-imagetoimage-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttoimage-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttovideo-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-imagetovideo-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-addsoundtovideo-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-videolipsync-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttospeech-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttospeech-voices-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-generatemelody-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-generatemusics-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttosplit-modals-select .ant-select-item-option-selected .ant-select-item-option-state::after {
+  content: url("data:image/svg+xml;utf8,<svg%20width='14'%20height='10'%20viewBox='0%200%2014%2010'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'><path%20d='M0.709559%203.88654L5.24192%208.38653L12.9791%200.704574'%20stroke='black'%20stroke-width='2'/></svg>");
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.node-imagetoimage-modals-select .ant-select-item-option,
+.node-texttoimage-modals-select .ant-select-item-option,
+.node-texttovideo-modals-select .ant-select-item-option,
+.node-imagetovideo-modals-select .ant-select-item-option,
+.node-addsoundtovideo-modals-select .ant-select-item-option,
+.node-videolipsync-modals-select .ant-select-item-option,
+.node-texttospeech-modals-select .ant-select-item-option,
+.node-texttospeech-voices-select .ant-select-item-option,
+.node-generatemelody-modals-select .ant-select-item-option,
+.node-generatemusics-modals-select .ant-select-item-option,
+.node-texttosplit-modals-select .ant-select-item-option {
+  display: flex !important;
+  align-items: center !important;
+}
+.node-imagetoimage-modals-select .ant-select-item-option-content,
+.node-texttoimage-modals-select .ant-select-item-option-content,
+.node-texttovideo-modals-select .ant-select-item-option-content,
+.node-imagetovideo-modals-select .ant-select-item-option-content,
+.node-addsoundtovideo-modals-select .ant-select-item-option-content,
+.node-videolipsync-modals-select .ant-select-item-option-content,
+.node-texttospeech-modals-select .ant-select-item-option-content,
+.node-texttospeech-voices-select .ant-select-item-option-content,
+.node-generatemelody-modals-select .ant-select-item-option-content,
+.node-generatemusics-modals-select .ant-select-item-option-content,
+.node-texttosplit-modals-select .ant-select-item-option-content {
+  display: flex !important;
+  align-items: center !important;
+}
+.node-imagetoimage-modals-select .ant-select-item-option-state,
+.node-texttoimage-modals-select .ant-select-item-option-state,
+.node-texttovideo-modals-select .ant-select-item-option-state,
+.node-imagetovideo-modals-select .ant-select-item-option-state,
+.node-addsoundtovideo-modals-select .ant-select-item-option-state,
+.node-videolipsync-modals-select .ant-select-item-option-state,
+.node-texttospeech-modals-select .ant-select-item-option-state,
+.node-texttospeech-voices-select .ant-select-item-option-state,
+.node-generatemelody-modals-select .ant-select-item-option-state,
+.node-generatemusics-modals-select .ant-select-item-option-state,
+.node-texttosplit-modals-select .ant-select-item-option-state {
+  align-self: center !important;
+}
+
+/**
+ * 覆盖 下的下拉项垂直间距
+ .node-imagetoimage-modals-select, 
+ .node-texttoimage-modals-select, 
+ .node-texttovideo-modals-select, 
+ .node-imagetovideo-modals-select, 
+ .node-addsoundtovideo-modals-select,
+ .node-videolipsync-modals-select,
+ .node-texttospeech-modals-select,
+ .node-texttospeech-voices-select,
+ .node-generatemelody-modals-select,
+ .node-texttosplit-modals-select
+ */
+.node-imagetoimage-modals-select,
+.node-texttoimage-modals-select,
+.node-texttovideo-modals-select,
+.node-imagetovideo-modals-select,
+.node-addsoundtovideo-modals-select,
+.node-videolipsync-modals-select,
+.node-texttospeech-modals-select,
+.node-texttospeech-voices-select,
+.node-generatemelody-modals-select,
+.node-generatemusics-modals-select,
+.node-texttosplit-modals-select {
+  position: relative;
+  overflow: visible;
+}
+.node-imagetoimage-modals-select .ant-select-item,
+.node-texttoimage-modals-select .ant-select-item,
+.node-texttovideo-modals-select .ant-select-item,
+.node-imagetovideo-modals-select .ant-select-item,
+.node-addsoundtovideo-modals-select .ant-select-item,
+.node-videolipsync-modals-select .ant-select-item,
+.node-texttospeech-modals-select .ant-select-item,
+.node-texttospeech-voices-select .ant-select-item,
+.node-generatemelody-modals-select .ant-select-item,
+.node-generatemusics-modals-select .ant-select-item,
+.node-texttosplit-modals-select .ant-select-item {
+  position: relative;
+  overflow: visible;
+  margin-top: 4px;
+  padding: 0px 0px;
+  vertical-align: middle;
+}
+.node-imagetoimage-modals-select .ant-select-item:first-child,
+.node-texttoimage-modals-select .ant-select-item:first-child,
+.node-texttovideo-modals-select .ant-select-item:first-child,
+.node-imagetovideo-modals-select .ant-select-item:first-child,
+.node-addsoundtovideo-modals-select .ant-select-item:first-child,
+.node-videolipsync-modals-select .ant-select-item:first-child,
+.node-texttospeech-modals-select .ant-select-item:first-child,
+.node-texttospeech-voices-select .ant-select-item:first-child,
+.node-generatemelody-modals-select .ant-select-item:first-child,
+.node-generatemusics-modals-select .ant-select-item:first-child,
+.node-texttosplit-modals-select .ant-select-item:first-child {
+  margin-top: 0;
+}
+.node-imagetoimage-modals-select .ant-select-item:hover,
+.node-texttoimage-modals-select .ant-select-item:hover,
+.node-texttovideo-modals-select .ant-select-item:hover,
+.node-imagetovideo-modals-select .ant-select-item:hover,
+.node-addsoundtovideo-modals-select .ant-select-item:hover,
+.node-videolipsync-modals-select .ant-select-item:hover,
+.node-texttospeech-modals-select .ant-select-item:hover,
+.node-texttospeech-voices-select .ant-select-item:hover,
+.node-generatemelody-modals-select .ant-select-item:hover,
+.node-generatemusics-modals-select .ant-select-item:hover,
+.node-texttosplit-modals-select .ant-select-item:hover {
+  z-index: 20;
+}
+
+/* -------------------------------
+.node-imagetoimage-aspectratio-select, 
+.node-texttoimage-aspectratio-select, 
+.node-texttovideo-aspectratio-select, 
+.node-texttovideo-duration-select, 
+.node-imagetovideo-aspectratio-select, 
+.node-imagetovideo-duration-select
+.node-imagetovideo-resolution-select,
+.node-videolipsync-fillmode-select
+.node-texttospeech-language-select,
+.node-generatemelody-duration-select
+-------------------------------*/
+.node-imagetoimage-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttoimage-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttovideo-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttovideo-duration-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-imagetovideo-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-imagetovideo-duration-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-imagetovideo-resolution-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-videolipsync-fillmode-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-texttospeech-language-select .ant-select-item-option-selected .ant-select-item-option-state .anticon,
+.node-generatemelody-duration-select .ant-select-item-option-selected .ant-select-item-option-state .anticon {
+  display: none;
+}
+.node-imagetoimage-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttoimage-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttovideo-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttovideo-duration-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-imagetovideo-aspectratio-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-imagetovideo-duration-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-imagetovideo-resolution-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-videolipsync-fillmode-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-texttospeech-language-select .ant-select-item-option-selected .ant-select-item-option-state::after,
+.node-generatemelody-duration-select .ant-select-item-option-selected .ant-select-item-option-state::after {
+  content: url("data:image/svg+xml;utf8,<svg%20width='14'%20height='10'%20viewBox='0%200%2014%2010'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'><path%20d='M0.709559%203.88654L5.24192%208.38653L12.9791%200.704574'%20stroke='black'%20stroke-width='2'/></svg>");
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.node-imagetoimage-aspectratio-select .ant-select-item-option,
+.node-texttoimage-aspectratio-select .ant-select-item-option,
+.node-texttovideo-aspectratio-select .ant-select-item-option,
+.node-texttovideo-duration-select .ant-select-item-option,
+.node-imagetovideo-aspectratio-select .ant-select-item-option,
+.node-imagetovideo-duration-select .ant-select-item-option,
+.node-imagetovideo-resolution-select .ant-select-item-option,
+.node-videolipsync-fillmode-select .ant-select-item-option,
+.node-texttospeech-language-select .ant-select-item-option,
+.node-generatemelody-duration-select .ant-select-item-option {
+  display: flex !important;
+  align-items: center !important;
+}
+.node-imagetoimage-aspectratio-select .ant-select-item-option-content,
+.node-texttoimage-aspectratio-select .ant-select-item-option-content,
+.node-texttovideo-aspectratio-select .ant-select-item-option-content,
+.node-texttovideo-duration-select .ant-select-item-option-content,
+.node-imagetovideo-aspectratio-select .ant-select-item-option-content,
+.node-imagetovideo-duration-select .ant-select-item-option-content,
+.node-imagetovideo-resolution-select .ant-select-item-option-content,
+.node-videolipsync-fillmode-select .ant-select-item-option-content,
+.node-texttospeech-language-select .ant-select-item-option-content,
+.node-generatemelody-duration-select .ant-select-item-option-content {
+  display: flex !important;
+  align-items: center !important;
+  font-size: 14px !important;
+}
+.node-imagetoimage-aspectratio-select .ant-select-item-option-state,
+.node-texttoimage-aspectratio-select .ant-select-item-option-state,
+.node-texttovideo-aspectratio-select .ant-select-item-option-state,
+.node-texttovideo-duration-select .ant-select-item-option-state,
+.node-imagetovideo-aspectratio-select .ant-select-item-option-state,
+.node-imagetovideo-duration-select .ant-select-item-option-state,
+.node-imagetovideo-resolution-select .ant-select-item-option-state,
+.node-videolipsync-fillmode-select .ant-select-item-option-state,
+.node-texttospeech-language-select .ant-select-item-option-state,
+.node-generatemelody-duration-select .ant-select-item-option-state {
+  align-self: center !important;
+}
+
+/**
+ * 覆盖所有类
+ node-imagetoimage-aspectratio-select, 
+ .node-texttoimage-aspectratio-select, 
+ .node-texttovideo-aspectratio-select, 
+ .node-texttovideo-duration-select, 
+ .node-imagetovideo-aspectratio-select, 
+ .node-imagetovideo-duration-select,
+ .node-imagetovideo-resolution-select,
+ .node-videolipsync-fillmode-select,
+ .node-texttospeech-language-select,
+ .node-generatemelody-duration-select
+-------------------------------*/
+/**
+ * 覆盖所有类下的下拉项垂直间距
+ */
+.node-imagetoimage-aspectratio-select,
+.node-texttoimage-aspectratio-select,
+.node-texttovideo-aspectratio-select,
+.node-texttovideo-duration-select,
+.node-imagetovideo-aspectratio-select,
+.node-imagetovideo-duration-select,
+.node-imagetovideo-resolution-select,
+.node-videolipsync-fillmode-select,
+.node-texttospeech-language-select,
+.node-generatemelody-duration-select {
+  position: relative;
+  overflow: visible;
+}
+.node-imagetoimage-aspectratio-select .ant-select-item,
+.node-texttoimage-aspectratio-select .ant-select-item,
+.node-texttovideo-aspectratio-select .ant-select-item,
+.node-texttovideo-duration-select .ant-select-item,
+.node-imagetovideo-aspectratio-select .ant-select-item,
+.node-imagetovideo-duration-select .ant-select-item,
+.node-imagetovideo-resolution-select .ant-select-item,
+.node-videolipsync-fillmode-select .ant-select-item,
+.node-texttospeech-language-select .ant-select-item,
+.node-generatemelody-duration-select .ant-select-item {
+  position: relative;
+  overflow: visible;
+  margin-top: 4px;
+  padding: 0px 10px;
+  vertical-align: middle;
+  z-index: 900000;
+}
+.node-imagetoimage-aspectratio-select .ant-select-item:first-child,
+.node-texttoimage-aspectratio-select .ant-select-item:first-child,
+.node-texttovideo-aspectratio-select .ant-select-item:first-child,
+.node-texttovideo-duration-select .ant-select-item:first-child,
+.node-imagetovideo-aspectratio-select .ant-select-item:first-child,
+.node-imagetovideo-duration-select .ant-select-item:first-child,
+.node-imagetovideo-resolution-select .ant-select-item:first-child,
+.node-videolipsync-fillmode-select .ant-select-item:first-child,
+.node-texttospeech-language-select .ant-select-item:first-child,
+.node-generatemelody-duration-select .ant-select-item:first-child {
+  margin-top: 0;
+}
+.node-imagetoimage-aspectratio-select .ant-select-item:hover,
+.node-texttoimage-aspectratio-select .ant-select-item:hover,
+.node-texttovideo-aspectratio-select .ant-select-item:hover,
+.node-texttovideo-duration-select .ant-select-item:hover,
+.node-imagetovideo-aspectratio-select .ant-select-item:hover,
+.node-imagetovideo-duration-select .ant-select-item:hover,
+.node-imagetovideo-resolution-select .ant-select-item:hover,
+.node-videolipsync-fillmode-select .ant-select-item:hover,
+.node-texttospeech-language-select .ant-select-item:hover,
+.node-generatemelody-duration-select .ant-select-item:hover {
+  z-index: 20;
+}
+
+/* Antd Select 下拉-纵向滚动容器覆盖，允许自定义滚动条接管 */
+.node-imagetoimage-aspectratio-select .rc-virtual-list-holder,
+.node-texttoimage-aspectratio-select .rc-virtual-list-holder,
+.node-texttovideo-aspectratio-select .rc-virtual-list-holder,
+.node-texttovideo-duration-select .rc-virtual-list-holder,
+.node-imagetovideo-aspectratio-select .rc-virtual-list-holder,
+.node-imagetovideo-duration-select .rc-virtual-list-holder,
+.node-imagetovideo-resolution-select .rc-virtual-list-holder,
+.node-videolipsync-fillmode-select .rc-virtual-list-holder,
+.node-texttospeech-language-select .rc-virtual-list-holder,
+.node-generatemelody-duration-select .rc-virtual-list-holder {
+  overflow: hidden !important;
+}
+.node-imagetoimage-aspectratio-select .rc-virtual-list,
+.node-texttoimage-aspectratio-select .rc-virtual-list,
+.node-texttovideo-aspectratio-select .rc-virtual-list,
+.node-texttovideo-duration-select .rc-virtual-list,
+.node-imagetovideo-aspectratio-select .rc-virtual-list,
+.node-imagetovideo-duration-select .rc-virtual-list,
+.node-imagetovideo-resolution-select .rc-virtual-list,
+.node-videolipsync-fillmode-select .rc-virtual-list,
+.node-texttospeech-language-select .rc-virtual-list,
+.node-generatemelody-duration-select .rc-virtual-list {
+  height: auto !important;
+}
+
+/**
+* 覆盖 AntD 常见滚动容器
+*/
+.ant-dropdown .ant-dropdown-menu,
+.ant-cascader-menu,
+.ant-tree-list-holder,
+.ant-table-body,
+.ant-table-container,
+.ant-modal-body,
+.ant-drawer-body,
+.ant-popover-inner,
+.ant-tabs-content,
+.ant-list-items,
+.ant-select-dropdown .rc-virtual-list-holder {
+  scrollbar-width: thin;
+  scrollbar-color: #888888 transparent;
+}
+
+.ant-dropdown .ant-dropdown-menu::-webkit-scrollbar,
+.ant-cascader-menu::-webkit-scrollbar,
+.ant-tree-list-holder::-webkit-scrollbar,
+.ant-table-body::-webkit-scrollbar,
+.ant-table-container::-webkit-scrollbar,
+.ant-modal-body::-webkit-scrollbar,
+.ant-drawer-body::-webkit-scrollbar,
+.ant-popover-inner::-webkit-scrollbar,
+.ant-tabs-content::-webkit-scrollbar,
+.ant-list-items::-webkit-scrollbar,
+.ant-select-dropdown .rc-virtual-list-holder::-webkit-scrollbar {
+  width: 4px !important;
+  height: 4px !important;
+}
+
+.ant-dropdown .ant-dropdown-menu::-webkit-scrollbar-track,
+.ant-cascader-menu::-webkit-scrollbar-track,
+.ant-tree-list-holder::-webkit-scrollbar-track,
+.ant-table-body::-webkit-scrollbar-track,
+.ant-table-container::-webkit-scrollbar-track,
+.ant-modal-body::-webkit-scrollbar-track,
+.ant-drawer-body::-webkit-scrollbar-track,
+.ant-popover-inner::-webkit-scrollbar-track,
+.ant-tabs-content::-webkit-scrollbar-track,
+.ant-list-items::-webkit-scrollbar-track,
+.ant-select-dropdown .rc-virtual-list-holder::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 2px;
+}
+
+.ant-dropdown .ant-dropdown-menu::-webkit-scrollbar-thumb,
+.ant-cascader-menu::-webkit-scrollbar-thumb,
+.ant-tree-list-holder::-webkit-scrollbar-thumb,
+.ant-table-body::-webkit-scrollbar-thumb,
+.ant-table-container::-webkit-scrollbar-thumb,
+.ant-modal-body::-webkit-scrollbar-thumb,
+.ant-drawer-body::-webkit-scrollbar-thumb,
+.ant-popover-inner::-webkit-scrollbar-thumb,
+.ant-tabs-content::-webkit-scrollbar-thumb,
+.ant-list-items::-webkit-scrollbar-thumb,
+.ant-select-dropdown .rc-virtual-list-holder::-webkit-scrollbar-thumb {
+  background-color: #888888;
+  border-radius: 2px;
+}
+
+.ant-dropdown .ant-dropdown-menu::-webkit-scrollbar-thumb:hover,
+.ant-cascader-menu::-webkit-scrollbar-thumb:hover,
+.ant-tree-list-holder::-webkit-scrollbar-thumb:hover,
+.ant-table-body::-webkit-scrollbar-thumb:hover,
+.ant-table-container::-webkit-scrollbar-thumb:hover,
+.ant-modal-body::-webkit-scrollbar-thumb:hover,
+.ant-drawer-body::-webkit-scrollbar-thumb:hover,
+.ant-popover-inner::-webkit-scrollbar-thumb:hover,
+.ant-tabs-content::-webkit-scrollbar-thumb:hover,
+.ant-list-items::-webkit-scrollbar-thumb:hover,
+.ant-select-dropdown .rc-virtual-list-holder::-webkit-scrollbar-thumb:hover {
+  background-color: #666666;
+}
+
+.ant-select-dropdown .rc-virtual-list-scrollbar,
+.ant-dropdown .rc-virtual-list-scrollbar,
+.ant-cascader .rc-virtual-list-scrollbar,
+.ant-tree .rc-virtual-list-scrollbar {
+  width: 4px !important;
+  right: 0;
+}
+
+.ant-select-dropdown .rc-virtual-list-scrollbar-thumb,
+.ant-dropdown .rc-virtual-list-scrollbar-thumb,
+.ant-cascader-menu .rc-virtual-list-scrollbar-thumb,
+.ant-tree-list-holder .rc-virtual-list-scrollbar-thumb {
+  background-color: #888888;
+  border-radius: 2px;
+}
+
+.ant-select-dropdown .rc-virtual-list-scrollbar:hover .rc-virtual-list-scrollbar-thumb,
+.ant-dropdown .rc-virtual-list-scrollbar:hover .rc-virtual-list-scrollbar-thumb,
+.ant-cascader .rc-virtual-list-scrollbar:hover .rc-virtual-list-scrollbar-thumb,
+.ant-tree .rc-virtual-list-scrollbar:hover .rc-virtual-list-scrollbar-thumb {
+  background-color: #666666;
+}
+
+/* tailwindcss scrollbar 隐藏 */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+/* AntCheckbox 鼠标悬停时改变边框颜色 */
+.ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.ant-checkbox:hover .ant-checkbox-inner {
+  border-color: #989898 !important;
+}
+.ant-checkbox .ant-checkbox-inner {
+  border-color: #989898; /* 默认边框 */
+}
+
+/* Editor 文本域 placeholder 样式 */
+.editorTextarea textarea::placeholder {
+  font-style: regular;
+  color: #989898 !important; /* 颜色 */
+  font-size: 12px !important; /* 字体大小 */
+}
+.editorTextarea textarea {
+  border-radius: 0 !important;
+}
+
+
+
+
+
+/* 骨架屏图片圆角为0 */
+.skeleton-no-radius .ant-skeleton-image,
+.skeleton-no-radius .ant-skeleton-node {
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+.glow-card {
+  --border-width: 3px;
+  --edge-radius: 3px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--edge-radius);
+  padding: var(--border-width);
+  /* 关键：利用 mask 仅保留边框区域 */
+  background: #35C838; /* 默认蓝色底色 */
+  overflow: hidden;
+  display: flex;
+}
+
+.glow-card::before {
+  content: '';
+  position: absolute;
+  /* 居中并扩大范围，确保旋转覆盖所有角落 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%;
+  height: 150%;
+  
+  /* 彩虹色段：这里使用 transparent 让大部分区域露出底部的蓝色 */
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 70%,
+    #ff0000 70%, 
+    #ff00ff 80%, 
+    #00ffff 90%,
+    transparent 100%
+  );
+  
+  animation: glow-card-rotate 4s linear infinite;
+  /* 混合模式：让彩色与蓝色自然融合，或者直接叠加 */
+  z-index: 1; 
+}
+
+/* 动画 */
+@keyframes glow-card-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+/* 音频输入节点搜索输入框圆角 */
+.node-audioinput-search-input .ant-input {
+  border-radius: 4px 0 0 4px !important;
+  border-right: 0 !important;
+}
+
+.node-audioinput-search-input .node-audioinput-search-button {
+  border-radius: 0 4px 4px 0 !important;
+  border-left: 0 !important;
+}
+
+/* ------------------------------------------- Editor 左侧节点列表样式 START--------------------------------------------------- */
+.pannelLeftComponentsMenuContianer .ant-menu-submenu {
+  margin: 0; /* 去掉默认间距 */
+}
+
+/* 左侧节点列表 一级菜单 高度 */
+.pannelLeftComponentsMenuContianer .ant-menu-submenu .ant-menu-submenu-title {
+  height: 38px !important; /* 统一高度 */
+  width: 52px !important;
+  padding: 0 !important; /* 内边距调整 */
+  margin: 0 !important; /* 去掉默认间距 */
+  display: flex;
+  align-items: center; /* 垂直居中 */
+}
+.pannelLeftComponentsMenuContianer .ant-menu-submenu:first-child > .ant-menu-submenu-title {
+  height: 52px !important;
+  width: 52px !important;
+}
+.pannelLeftComponentsMenuContianer .ant-menu-submenu:last-child > .ant-menu-submenu-title {
+  height: 52px !important;
+  width: 52px !important;
+}
+
+.pannelLeftComponentsMenuContianer .ant-menu-submenu-title:hover {
+  transition: none !important; /* 避免 hover 闪动 */
+}
+
+/* 左侧节点列表 一级菜单 hover 背景透明 */
+.pannelLeftComponentsMenuContianer .ant-menu-submenu-title:hover {
+  background-color: transparent !important;
+}
+.pannelLeftComponentsMenuContianer .ant-menu-submenu-open > .ant-menu-submenu-title:hover {
+  background-color: transparent !important;
+}
+.pannelLeftComponentsMenuContianer .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: transparent !important;
+}
+
+/* 左侧节点列表 二级菜单 分组标题 内边距 */
+.ant-menu-item-group-title {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.ant-menu .ant-menu-item-group-list .ant-menu-item {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.ant-menu-submenu-popup {
+  border-radius: 5px !important;
+}
+.ant-menu-submenu-popup > .ant-menu {
+  border-radius: 5px !important;
+}
+.ant-menu-submenu-popup .ant-menu-vertical {
+  padding-bottom: 6px !important;
+}
+
+.ant-menu-submenu-popup .ant-menu-vertical .ant-menu-item,
+.ant-menu-submenu-popup .ant-menu-vertical .ant-menu-submenu-title {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 38px !important;
+}
+
+/* ------------ ul 右侧空隙移除 start---- */
+/* 1. 固定 popup 宽度 */
+.ant-menu-submenu-popup {
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+}
+/* 2. 禁止 ul 被 max-content 撑宽 */
+.ant-menu-submenu-popup > .ant-menu.ant-menu-vertical {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+/* 3. li 撑满宽度 */
+.ant-menu-submenu-popup .ant-menu-item {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+/* 4. 移除右侧 ::after 占位（真正导致右侧空隙的罪魁祸首） */
+.ant-menu-submenu-popup .ant-menu-item::after,
+.ant-menu-submenu-popup .ant-menu-submenu-title::after {
+  display: none !important;
+  width: 0 !important;
+}
+/* ------------ ul 右侧空隙移除 end---- */
+
+/* 二级菜单（popup）移除 hover 背景 */
+.ant-menu-submenu-popup .ant-menu-item:not(.ant-menu-item-selected):hover,
+.ant-menu-submenu-popup .ant-menu-submenu-title:hover {
+  background-color: transparent !important;
+}
+
+.ant-menu-light .ant-menu-item:not(.ant-menu-item-selected):active {
+  background-color: transparent !important;
+}
+
+/* 🔥 二级菜单选中项样式全面移除 */
+
+/* 选中项背景、颜色、阴影 */
+.ant-menu-submenu-popup .ant-menu-item-selected,
+.ant-menu-submenu-popup .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-weight: normal !important;
+  box-shadow: none !important;
+}
+
+/* 移除右侧蓝条 ::after */
+.ant-menu-submenu-popup .ant-menu-item-selected::after,
+.ant-menu-submenu-popup .ant-menu-submenu-selected::after {
+  display: none !important;
+  width: 0 !important;
+}
+
+/* 二级菜单 Popup 左上尖角 */
+/* 使 popup 可溢出，否则尖角会被裁剪 */
+.ant-menu-submenu-popup::before {
+  content: "";
+  position: absolute;
+  top: 24px; /* 控制尖角高度 */
+  left: 2px; /* 让尖角伸到左侧外面 */
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-left: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
+  transform: rotate(-45deg);
+  z-index: 100;
+  opacity: 1 !important;
+}
+
+/* ------------------------------------------- Editor 左侧节点列表样式 END--------------------------------------------------- */

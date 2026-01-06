@@ -1,0 +1,17 @@
+/* ✅ 保证 Modal 居中、去除动画源 */
+.confirmWrapper :global(.ant-modal) {
+  transform-origin: center center !important; /* 或 unset，看是否还需动画 */
+}
+
+/* 内容区域 padding 0 */
+.confirmWrapper :global .rename-project-modal-content {
+  padding: 0 !important;
+}
+
+/* 关闭按钮悬停样式 */
+.confirmWrapper :global .rename-project-modal .ant-modal-close:hover {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  background: transparent !important;
+}

@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "breatic"
+version = "0.1.0"
+description = "Breatic Application"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "aiohttp==3.11.16",
+    "aiosmtplib==4.0.1",
+    "authlib==1.5.2",
+    "fastapi==0.116.1",
+    "httpx[http2] (>=0.28.1,<0.29.0)",
+    "motor==3.7.1",
+    "openpyxl==3.1.5",
+    "oss2==2.19.1",
+    "pydantic[email]==2.11.5",
+    "python-dotenv==1.1.1",
+    "redis==6.2.0",
+    "requests==2.32.4",
+    "starlette==0.47.2",
+    "volcengine==1.0.180",
+    "stripe==12.3.0",
+    "itsdangerous==2.1.2",
+    "gunicorn==23.0.0",
+    "uvicorn-worker==0.3.0",
+    "pillow==11.2.1",
+    "uvicorn==0.34.0",
+    "pycryptodome==3.9.9",
+    "asyncpg (>=0.30.0,<0.31.0)",
+    "sqlalchemy[asyncio] (>=2.0.43,<3.0.0)",
+    "snowflake-id (>=1.0.2,<2.0.0)",
+    "python-multipart (>=0.0.20,<0.0.21)",
+    "pyjwt (>=2,<3)",
+    "uuid6 (>=2025.0.1,<2026.0.0)",
+    "websockets (>=15.0.1,<16.0.0)",
+    "av (>=16.0.1,<17.0.0)",
+]
+
+# 添加这个配置块
+[tool.hatch.build.targets.wheel]
+packages = [
+    "api",
+    "collections", 
+    "data",
+    "locales",
+    "models",
+    "utils"
+]
+# 包含根目录的 Python 文件
+include = [
+    "main.py",
+    "docker_config.py", 
+    "init_env.py"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "isort",
+    "mypy",
+]
