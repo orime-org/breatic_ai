@@ -4,7 +4,7 @@
 
 Our mission: **make creation as natural as breathing**.
 
-This repository (`breatic_ai`) contains the open-source **frontend** of Breatic, including the editor core, workflow system, and workspace.
+This repository (`breatic_ai`) contains the open-source of Breatic, including the editor core, workflow system, and workspace.
 
 ## ✨ Features
 
@@ -25,44 +25,65 @@ This repository (`breatic_ai`) contains the open-source **frontend** of Breatic,
   - React Flow  
   - Tailwind CSS  
   - FastAPI (backend)  
-  - MongoDB (storage)
+  - PostgreSQL and Redis (storage)
 
 - 🛠️ **Extensible Architecture**  
   Add custom nodes, models, and workflow plugins.
 
-## 📁 Project Structure
-
 ## 🚀 Getting Started
 
-This section helps you set up the Breatic AI frontend locally and start developing or contributing.
+This section helps you set up the Breatic AI locally and start developing or contributing.
 
 ---
 
-## 📌 Requirements
-
-Before you begin, ensure your environment meets the following:
-
-### **System Requirements**
-- macOS / Linux / Windows  
-- Node.js **18 or higher**  
-- A package manager:
-  - **pnpm** (recommended)  
-  - yarn  
-  - npm  
-
-### **Recommended Tools**
-- VS Code  
-- React / TypeScript tooling  
-- Git + GitHub CLI (optional)
-
----
-
-## 🛠️ Installation
 
 Clone the repository:
 
-git clone https://github.com/<your-org>/breatic_ai.git
+git clone https://github.com/orime-org/breatic_ai.git
 cd breatic_ai
+
+## ⚠️ Environment Variables Setup (Important)
+Before running the project, you must configure the environment variables for both backend and frontend.
+
+- Backend (app)
+  - Navigate to the backend app directory:
+  
+    ```bash
+    cd app
+    cp .env.example .env
+  - Open .env and fill in all required keys with valid values
+    - (API keys, database URLs, secrets, etc.)
+    - ❗ The backend will not start correctly if required environment variables are missing or invalid.
+- Frontend (web)
+  - Navigate to the frontend directory:
+    ```bash
+    cd app
+    cp .env.example .env
+  - Make sure the API endpoint and related configs match your local backend setup.
+## 🛠️ Running
+This project consists of a FastAPI backend and a React frontend, developed and run separately in local environments.
+
+- Backend (FastAPI)
+  - Framework: FastAPI
+  - Server: uv
+  - Default Port: 3000
+
+- Start Backend
+    ```bash
+    cd app
+    uv run main.py
+Once started, the backend will be available at: http://localhost:3000
+
+- Frontend (React)
+  - Framework: React
+  - Bundler: Webpack
+  - Package Manager: pnpm (recommended)
+
+    ```bash
+    cd web
+    pnpm install
+    pnpm run dev
+After startup, the frontend will be accessible at:http://localhost:8080
 
 ## Contributing & Issues
 
@@ -95,7 +116,7 @@ Community input helps us shape the direction of the project.
 
 1. Fork the repository  
 2. Create a feature or fix branch  
-   ```bash
+  ```bash
    git checkout -b feature/your-feature-name
 
 
