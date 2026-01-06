@@ -37,11 +37,10 @@ This section helps you set up the Breatic AI locally and start developing or con
 ---
 
 
-Clone the repository:
-
-git clone https://github.com/orime-org/breatic_ai.git
-cd breatic_ai
-
+- **Clone the repository:**
+    ```bash
+    git clone https://github.com/orime-org/breatic_ai.git
+    cd breatic_ai
 ## ⚠️ Environment Variables Setup (Important)
 Before running the project, you must configure the environment variables for both backend and frontend.
 
@@ -56,6 +55,7 @@ Before running the project, you must configure the environment variables for bot
     - ❗ The backend will not start correctly if required environment variables are missing or invalid.
 - Frontend (web)
   - Navigate to the frontend directory:
+  
     ```bash
     cd app
     cp .env.example .env
@@ -114,12 +114,11 @@ Community input helps us shape the direction of the project.
 
 ### 🛠️ Contributing Code
 
-1. Fork the repository  
-2. Create a feature or fix branch  
+- Fork the repository  
+- Create a feature or fix branch  
+  
   ```bash
-   git checkout -b feature/your-feature-name
-
-
+  git checkout -b feature/your-feature-name
 ## Roadmap
 
 This roadmap outlines the major milestones and upcoming improvements planned for the project.  
